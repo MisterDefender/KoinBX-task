@@ -4,7 +4,7 @@
 In this task, we will create a contract following the ERC20 token standard and deploy it to the Arbitrum Sepolia testnet. The token will be named kBXToken (KoinBX token).
 
 ## Contract Deployment Details
-- Contract Address: [0x00cf6c168E79Cd7a6bf139E90B1Ea22b4Ef3fe18](https://arbitrum.etherscan.io/address/0x00cf6c168E79Cd7a6bf139E90B1Ea22b4Ef3fe18)
+- Contract Address: [0x00cf6c168E79Cd7a6bf139E90B1Ea22b4Ef3fe18](https://sepolia.arbiscan.io/address/0x00cf6c168E79Cd7a6bf139E90B1Ea22b4Ef3fe18#code)
 - Network: Arbitrum Sepolia testnet
 
 ## Deployment Instructions
