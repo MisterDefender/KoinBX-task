@@ -1,0 +1,38 @@
+{
+  "name": "koin_bx_task",
+  "version": "1.0.0",
+  "description": "Test task by KoinBX ",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat deploy --network arbSepolia",
+    "arbitrum-sepolia:verify": "hardhat --network arbSepolia etherscan-verify --solc-input",
+    "generate-keys": "npx hardhat run scripts/HD-wallet/HD.wallet.js",
+    "distribute-tokens": "npx hardhat run scripts/Token-distribution/Token.distribution.js --network arbSepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-ignition": "^0.15.0",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@typechain/ethers-v6": "^0.5.0",
+    "@typechain/hardhat": "^9.0.0",
+    "chai": "^4.2.0",
+    "ethers": "^6.4.0",
+    "hardhat": "^2.22.3",
+    "hardhat-deploy": "^0.12.2",
+    "hardhat-deploy-ethers": "^0.4.1",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.8.0",
+    "typechain": "^8.3.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethereumjs-util": "^7.1.5",
+    "hdkey": "^2.1.0"
+  }
+}

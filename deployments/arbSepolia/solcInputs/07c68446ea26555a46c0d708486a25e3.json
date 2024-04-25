@@ -1,0 +1,42 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/ERC20.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.24;\n\nimport {IERC20} from \"./Interfaces/IERC20.sol\";\n\ncontract ERC20 is IERC20 {\n    event Transfer(address indexed from, address indexed to, uint256 value);\n    event Approval(address indexed owner, address indexed spender, uint256 value);\n\n    uint256 public totalSupply;\n    mapping(address owner => uint256 amount) public balanceOf;\n    mapping(address owner => mapping(address spender => uint256 amount)) public allowance;\n    string public name;\n    string public symbol;\n    uint8 public decimals;\n\n    constructor(string memory _name, string memory _symbol, uint8 _decimals) {\n        name = _name;\n        symbol = _symbol;\n        decimals = _decimals;\n    }\n\n    function transfer(address recipient, uint256 amount) external returns (bool) {\n        balanceOf[msg.sender] -= amount;\n        balanceOf[recipient] += amount;\n        emit Transfer(msg.sender, recipient, amount);\n        return true;\n    }\n\n    function approve(address spender, uint256 amount) external returns (bool) {\n        allowance[msg.sender][spender] = amount;\n        emit Approval(msg.sender, spender, amount);\n        return true;\n    }\n\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool) {\n        allowance[sender][msg.sender] -= amount;\n        balanceOf[sender] -= amount;\n        balanceOf[recipient] += amount;\n        emit Transfer(sender, recipient, amount);\n        return true;\n    }\n\n    function _mint(address to, uint256 amount) internal {\n        balanceOf[to] += amount;\n        totalSupply += amount;\n        emit Transfer(address(0), to, amount);\n    }\n\n    function _burn(address from, uint256 amount) internal {\n        balanceOf[from] -= amount;\n        totalSupply -= amount;\n        emit Transfer(from, address(0), amount);\n    }\n\n}\n"
+    },
+    "contracts/Interfaces/IERC20.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.24;\n\ninterface IERC20 {\n    function totalSupply() external view returns (uint256);\n    function balanceOf(address account) external view returns (uint256);\n    function transfer(address recipient, uint256 amount) external returns (bool);\n    function allowance(address owner, address spender) external view returns (uint256);\n    function approve(address spender, uint256 amount) external returns (bool);\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\n}\n"
+    },
+    "contracts/kBXToken.sol": {
+      "content": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.24;\n\nimport {ERC20} from \"./ERC20.sol\";\n\ncontract KoinBX is ERC20 {\n    uint256 INITIAL_SUPPLY = 10 ^ 10 * 1 ether; //10^28\n    uint256 public constant faucetLimit = 500000 * 1 ether;\n    address public owner;\n    mapping(address => uint256) private _faucets;\n\n    modifier onlyOwner() {\n        require(msg.sender == owner, \"KoinBX: Caller must be owner of token\");\n        _;\n    }\n\n    constructor(address _owner, string memory _name, string memory _symbol, uint8 _decimals)\n        ERC20(_name, _symbol, _decimals)\n    {\n        owner = _owner;\n        _mint(_owner, INITIAL_SUPPLY);\n    }\n\n    function mintToken(address _to, uint256 _amount) external onlyOwner {\n        _mint(_to, _amount);\n    }\n\n    function faucetTokens(uint256 _amount) external {\n        require(_faucets[msg.sender] + _amount <= faucetLimit, \"KoinBX: Faucet amount limitation\");\n        _mint(msg.sender, _amount);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 1000
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
